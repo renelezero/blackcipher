@@ -102,7 +102,7 @@
       white-space: nowrap;
       overflow: hidden;
       border-right: 4px solid var(--primary);
-      animation: typing 3s steps(20, end) forwards, blink 0.75s step-end infinite;
+      animation: typing 3s steps(9, end) forwards, blink 0.75s step-end infinite;
     }
     
     .aum-counter {
@@ -229,7 +229,7 @@
     
     @keyframes typing {
       from { width: 0 }
-      to { width: 100% }
+      to { width: 9ch }
     }
     
     @keyframes blink {
@@ -716,7 +716,7 @@
     <h2 class="glitch-effect" data-text="$NEOGAZA">$NEOGAZA</h2>
     <h3>Releasing soon...</h3>
     <p>MENA-based developers and hackers seeking to restore liquidity and financial structure for millions robbed of legitimate economic access. Building in the shadows. Engineering for power.</p>
-    <div class="aum-counter" id="aumCounter">AUM: $0</div>
+    <div class="aum-counter" id="volumeCounter">24h Volume: $28,756,423</div>
     
     <div class="cta-buttons">
       <button class="btn btn-wallet" id="connectWalletBtn">
@@ -882,4 +882,130 @@
 
   <!-- Application Modal -->
   <div class="modal" id="applicationModal">
-    <div class="modal
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h2 class="modal-title">Apply For Network Access</h2>
+      <form class="modal-form" id="applicationForm">
+        <div class="form-group">
+          <label for="walletAddress">Wallet Address</label>
+          <input type="text" id="walletAddress" placeholder="0x..." required>
+        </div>
+        <div class="form-group">
+          <label for="telegramHandle">Telegram Handle</label>
+          <input type="text" id="telegramHandle" placeholder="@username" required>
+        </div>
+        <div class="form-group">
+          <label for="discordHandle">Discord Handle</label>
+          <input type="text" id="discordHandle" placeholder="username#0000" required>
+        </div>
+        <div class="form-group">
+          <label for="reason">Why do you want to join Black Cipher?</label>
+          <textarea id="reason" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="modal-submit">Submit Application</button>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    // Modal functionality
+    const modal = document.getElementById('applicationModal');
+    const applyBtn = document.getElementById('applyBtn');
+    const closeModal = document.getElementById('closeModal');
+    
+    applyBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+    
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+    
+    // Terminal functionality
+    const terminalInput = document.getElementById('terminalInput');
+    const terminalContent = document.getElementById('terminalContent');
+    
+    terminalInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const command = terminalInput.value;
+        const newLine = document.createElement('div');
+        newLine.className = 'terminal-line';
+        newLine.innerHTML = `<span class="terminal-prompt">root@cipher:~$</span> <span class="terminal-output">${command}</span>`;
+        terminalContent.appendChild(newLine);
+        
+        // Simple command responses
+        let response;
+        if (command.toLowerCase().includes('help')) {
+          response = 'available commands: status, nodes, connect, balance, whitepaper, clear';
+        } else if (command.toLowerCase().includes('status')) {
+          response = 'network status: operational | uptime: 99.8% | last block: 2 seconds ago';
+        } else if (command.toLowerCase().includes('nodes')) {
+          response = 'active nodes: 20 | pending: 3 | region distribution: MENA (65%), EU (25%), ASIA (10%)';
+        } else if (command.toLowerCase().includes('connect')) {
+          response = 'error: wallet authentication required. use connect-wallet command first.';
+        } else if (command.toLowerCase().includes('whitepaper')) {
+          response = 'generating secure link to whitepaper... please check your wallet for authentication.';
+        } else if (command.toLowerCase().includes('clear')) {
+          terminalContent.innerHTML = '';
+          terminalInput.value = '';
+          return;
+        } else {
+          response = `command not recognized: "${command}". type "help" for available commands.`;
+        }
+        
+        setTimeout(() => {
+          const responseLine = document.createElement('div');
+          responseLine.className = 'terminal-line';
+          responseLine.innerHTML = `<span class="terminal-prompt">root@cipher:~$</span> <span class="terminal-output">${response}</span>`;
+          terminalContent.appendChild(responseLine);
+          terminalContent.scrollTop = terminalContent.scrollHeight;
+        }, 500);
+        
+        terminalInput.value = '';
+      }
+    });
+    
+    // Stats counters
+    const txCounter = document.getElementById('txCounter');
+    const memberCounter = document.getElementById('memberCounter');
+    const apyCounter = document.getElementById('apyCounter');
+    
+    let txCount = 0;
+    let memberCount = 0;
+    let apyValue = 0;
+    
+    const updateCounters = () => {
+      if (txCount < 1850000) {
+        txCount += Math.floor(Math.random() * 10000) + 5000;
+        txCounter.textContent = txCount.toLocaleString();
+      }
+      
+      if (memberCount < 8500) {
+        memberCount += Math.floor(Math.random() * 100) + 50;
+        memberCounter.textContent = memberCount.toLocaleString();
+      }
+      
+      if (apyValue < 126) {
+        apyValue += Math.random() * 3;
+        apyCounter.textContent = apyValue.toFixed(2) + '%';
+      }
+      
+      if (txCount >= 1850000 && memberCount >= 8500 && apyValue >= 126) {
+        clearInterval(counterInterval);
+      }
+    };
+    
+    const counterInterval = setInterval(updateCounters, 200);
+    
+    // Connect wallet button
+    const connectWalletBtn = document.getElementById('connectWalletBtn');
+    connectWalletBtn.addEventListener('click', () => {
+      alert('Wallet connection feature coming soon. This will integrate with MetaMask, WalletConnect, and other providers.');
+    });
+  </script>
