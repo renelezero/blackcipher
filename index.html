@@ -958,6 +958,7 @@
 
           // Map initialization and faction markers
 // Map initialization and faction markers
+// Map initialization and faction markers
     const factions = [
       { name: "$Gaza Cell 1", coords: [31.52, 34.47], color: "red", type: "node" },
       { name: "$Gaza Cell 2", coords: [31.53, 34.45], color: "red", type: "node" },
@@ -968,20 +969,28 @@
       { name: "$Lebanon Front 3", coords: [33.92, 35.47], color: "red", type: "node" },
       { name: "$Lebanon Front 4", coords: [33.94, 35.49], color: "red", type: "node" },
       { name: "$Zionist Node", coords: [32.0853, 34.7818], color: "white", type: "node" },
-      { name: "$Amman HQ", coords: [31.9516, 35.9239], color: "green", type: "castle" },
+      { name: "$Amman", coords: [31.9516, 35.9239], color: "green", type: "node" },
       { name: "$Abu Dhabi", coords: [24.4539, 54.3773], color: "green", type: "node" },
       { name: "$Jeddah", coords: [21.4858, 39.1925], color: "green", type: "node" },
       { name: "$Beirut", coords: [33.8938, 35.5018], color: "green", type: "node" },
       { name: "$Aleppo", coords: [36.2021, 37.1343], color: "green", type: "node" },
       { name: "$Damascus", coords: [33.5138, 36.2765], color: "green", type: "node" },
-      { name: "$Baghdad", coords: [33.3152, 44.3661], color: "green", type: "node" },
+      { name: "$Baghdad HQ", coords: [33.3152, 44.3661], color: "green", type: "castle" },
       { name: "$Idlib", coords: [35.9306, 36.6339], color: "green", type: "node" },
       { name: "$Kuwait", coords: [29.3759, 47.9774], color: "green", type: "node" },
       { name: "$Bahrain", coords: [26.0667, 50.5577], color: "green", type: "node" },
-      { name: "$Doha", coords: [25.276987, 51.520008], color: "green", type: "node" }
+      { name: "$Doha", coords: [25.276987, 51.520008], color: "green", type: "node" },
+      { name: "$Istanbul", coords: [41.0082, 28.9784], color: "green", type: "node" },
+      { name: "$Baku", coords: [40.4093, 49.8671], color: "green", type: "node" },
+      { name: "$Moscow", coords: [55.7558, 37.6173], color: "green", type: "node" },
+      { name: "$Yerevan", coords: [40.1792, 44.4991], color: "green", type: "node" },
+      { name: "$Islamabad", coords: [33.6844, 73.0479], color: "green", type: "node" },
+      { name: "$Karachi", coords: [24.8607, 67.0011], color: "green", type: "node" }
     ];
+
     
-    const map = L.map('map').setView([31.9516, 35.9239], 6); // Focused on Amman
+    const map = L.map('map').setView([33.3152, 44.3661], 5); // Baghdad centered
+ // Focused on Amman
     
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors & CartoDB',
@@ -1024,10 +1033,10 @@
     });
     
     // Create connection lines from Amman HQ to all other nodes
-    const ammanCoords = factions.find(f => f.name === "$Amman HQ").coords;
+    const ammanCoords = factions.find(f => f.name === "$Baghdad HQ").coords;
     
     factions.forEach(faction => {
-      if (faction.name !== "$Amman HQ") {
+      if (faction.name !== "$Baghdad HQ") {
         // Create a line from Amman to each node
         const line = L.polyline([ammanCoords, faction.coords], {
           color: faction.color,
@@ -1043,7 +1052,7 @@
     const createRandomConnections = (count = 10) => {
       for (let i = 0; i < count; i++) {
         // Pick two random nodes that aren't Amman
-        const nonAmmanFactions = factions.filter(f => f.name !== "$Amman HQ");
+        const nonAmmanFactions = factions.filter(f => f.name !== "$Baghdad HQ");
         const faction1 = nonAmmanFactions[Math.floor(Math.random() * nonAmmanFactions.length)];
         const faction2 = nonAmmanFactions[Math.floor(Math.random() * nonAmmanFactions.length)];
         
