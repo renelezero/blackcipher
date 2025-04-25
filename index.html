@@ -720,18 +720,9 @@
 <body>
   <div class="loading-bar"></div>
   <div class="bg-grid"></div>
+  <!-- Hidden background music -->
+  <audio id="backgroundMusic" src="https://raw.githubusercontent.com/renelezero/blackcipher/main/Acid%20Only.mp3" autoplay loop preload="auto" style="display: none;"></audio>
 
-  <div style="display:none;">
-    <iframe 
-      id="backgroundMusic"
-      width="0"
-      height="0"
-      src="https://www.youtube.com/embed/VfcEAfmNVGM?start=3120&autoplay=1&loop=1&playlist=VfcEAfmNVGM&controls=0&mute=0&modestbranding=1"
-      frameborder="0"
-      allow="autoplay"
-      allowfullscreen
-    ></iframe>
-  </div>
 
   <nav class="navbar">
     <div class="logo">
@@ -1149,15 +1140,19 @@
     
     const counterInterval = setInterval(updateCounters, 200);
     
-        // Unlock background music on first click
+    const backgroundMusic = document.getElementById('backgroundMusic');
+
     document.body.addEventListener('click', () => {
-      const iframe = document.getElementById('backgroundMusic');
-      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      if (backgroundMusic.paused) {
+        backgroundMusic.play();
+      }
     }, { once: true });
-    
+
     // Connect wallet button
     const connectWalletBtn = document.getElementById('connectWalletBtn');
     connectWalletBtn.addEventListener('click', () => {
       alert('Wallet connection feature coming soon. This will integrate with MetaMask, WalletConnect, and other providers.');
     });
+
+    
   </script>
