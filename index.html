@@ -19,21 +19,13 @@
     }
     .navbar {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       padding: 20px 40px;
       position: fixed;
       width: 100%;
       background: rgba(0, 0, 0, 0.85);
       z-index: 1000;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-    }
-    .logo img {
-      height: 40px;
-      margin-right: 12px;
     }
     .logo span {
       font-family: 'Unbounded', cursive;
@@ -61,6 +53,13 @@
       overflow: hidden;
       border-right: 4px solid #ff0000;
       animation: typing 3s steps(20, end) forwards, blink 0.75s step-end infinite;
+    }
+    .aum-counter {
+      font-size: 1.2rem;
+      color: #00ffcc;
+      margin-top: 20px;
+      font-family: 'Unbounded', cursive;
+      letter-spacing: 1px;
     }
     .hero h3, .hero p {
       opacity: 0;
@@ -116,7 +115,6 @@
 <body>
   <nav class="navbar">
     <div class="logo">
-      <img src="logo1.png" alt="Logo">
       <span>Black Cipher Capital</span>
     </div>
   </nav>
@@ -125,6 +123,7 @@
     <h2>$NEOGAZA</h2>
     <h3>Releasing soon...</h3>
     <p>MENA-based developers and hackers seeking to restore liquidity and financial structure for millions robbed of legitimate economic access. Building in the shadows. Engineering for power.</p>
+    <div class="aum-counter" id="aumCounter">AUM: $0</div>
   </section>
 
   <section id="feed" class="feed-section">
@@ -201,6 +200,13 @@
         opacity: 0.8
       }).addTo(map);
     });
+
+    let aum = 0;
+    const aumElement = document.getElementById('aumCounter');
+    setInterval(() => {
+      aum += Math.floor(Math.random() * 5000) + 1000;
+      aumElement.textContent = `AUM: $${aum.toLocaleString()}`;
+    }, 1500);
   </script>
 </body>
 </html>
