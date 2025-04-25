@@ -689,6 +689,26 @@
       width: 0%;
       animation: loadingAnimation 2s ease-out forwards;
     }
+
+    .pulse-marker {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.4;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+    }
+
     
     @keyframes loadingAnimation {
       0% { width: 0%; }
@@ -716,7 +736,7 @@
     <h2 class="glitch-effect" data-text="$NEOGAZA">$NEOGAZA</h2>
     <h3>Releasing soon...</h3>
     <p>MENA-based developers and hackers seeking to restore liquidity and financial structure for millions robbed of legitimate economic access. Building in the shadows. Engineering for power.</p>
-    <div class="aum-counter" id="volumeCounter">24h Volume: $28,756,423</div>
+    <div class="aum-counter" id="volumeCounter">24h Volume: $2,856,423</div>
     
     <div class="cta-buttons">
       <button class="btn btn-wallet" id="connectWalletBtn">
@@ -928,6 +948,53 @@
     });
     
     // Terminal functionality
+
+          // Map initialization and faction markers
+    const factions = [
+      { name: "$Gaza Cell 1", coords: [31.52, 34.47], color: "red" },
+      { name: "$Gaza Cell 2", coords: [31.53, 34.45], color: "red" },
+      { name: "$Gaza Cell 3", coords: [31.50, 34.46], color: "red" },
+      { name: "$Gaza Cell 4", coords: [31.515, 34.44], color: "red" },
+      { name: "$Lebanon Front 1", coords: [33.95, 35.5], color: "red" },
+      { name: "$Lebanon Front 2", coords: [33.93, 35.48], color: "red" },
+      { name: "$Lebanon Front 3", coords: [33.92, 35.47], color: "red" },
+      { name: "$Lebanon Front 4", coords: [33.94, 35.49], color: "red" },
+      { name: "$Zionist Node", coords: [32.0853, 34.7818], color: "white" },
+      { name: "$Amman HQ", coords: [31.9516, 35.9239], color: "green", pulse: true },
+      { name: "$Abu Dhabi", coords: [24.4539, 54.3773], color: "green" },
+      { name: "$Jeddah", coords: [21.4858, 39.1925], color: "green" },
+      { name: "$Beirut", coords: [33.8938, 35.5018], color: "green" },
+      { name: "$Aleppo", coords: [36.2021, 37.1343], color: "green" },
+      { name: "$Damascus", coords: [33.5138, 36.2765], color: "green" },
+      { name: "$Baghdad", coords: [33.3152, 44.3661], color: "green" },
+      { name: "$Idlib", coords: [35.9306, 36.6339], color: "green" },
+      { name: "$Kuwait", coords: [29.3759, 47.9774], color: "green" },
+      { name: "$Bahrain", coords: [26.0667, 50.5577], color: "green" },
+      { name: "$Doha", coords: [25.276987, 51.520008], color: "green" }
+    ];
+    
+    const map = L.map('map').setView([31.9516, 35.9239], 6); // Focused on Amman
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    
+    factions.forEach(faction => {
+      const marker = L.circleMarker(faction.coords, {
+        radius: 8,
+        fillColor: faction.color,
+        color: "#000",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8,
+        className: faction.pulse ? 'pulse-marker' : ''
+      }).addTo(map);
+      
+      marker.bindPopup(`<strong>${faction.name}</strong>`);
+    });
+
+
+    
     const terminalInput = document.getElementById('terminalInput');
     const terminalContent = document.getElementById('terminalContent');
     
