@@ -720,7 +720,19 @@
 <body>
   <div class="loading-bar"></div>
   <div class="bg-grid"></div>
-  
+
+  <div style="display:none;">
+    <iframe 
+      id="backgroundMusic"
+      width="0"
+      height="0"
+      src="https://www.youtube.com/embed/VfcEAfmNVGM?start=3120&autoplay=1&loop=1&playlist=VfcEAfmNVGM&controls=0&mute=0&modestbranding=1"
+      frameborder="0"
+      allow="autoplay"
+      allowfullscreen
+    ></iframe>
+  </div>
+
   <nav class="navbar">
     <div class="logo">
       <span>Black Cipher Capital</span>
@@ -1136,6 +1148,12 @@
     };
     
     const counterInterval = setInterval(updateCounters, 200);
+    
+        // Unlock background music on first click
+    document.body.addEventListener('click', () => {
+      const iframe = document.getElementById('backgroundMusic');
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    }, { once: true });
     
     // Connect wallet button
     const connectWalletBtn = document.getElementById('connectWalletBtn');
