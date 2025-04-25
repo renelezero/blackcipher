@@ -6,16 +6,14 @@
   <title>$NEOGAZA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     body {
       margin: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: url('logo1.png') no-repeat center center fixed;
+      font-family: 'Unbounded', cursive;
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('logo1.png') no-repeat center center fixed;
       background-size: cover;
-      background-blend-mode: overlay;
-      background-color: #000;
       color: #fff;
       overflow-x: hidden;
     }
@@ -42,9 +40,9 @@
     }
 
     .logo span {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Unbounded', cursive;
       font-size: 1.5rem;
-      font-weight: 800;
+      font-weight: 700;
       background: linear-gradient(90deg, #ff0000, #ff3333);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -61,7 +59,7 @@
     }
 
     .hero h1 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Unbounded', cursive;
       font-size: 4rem;
       background: linear-gradient(90deg, #ff0000, #ff3333);
       -webkit-background-clip: text;
@@ -77,7 +75,7 @@
 
     .feed-section {
       padding: 50px 20px;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
     }
 
     .feed-container {
@@ -89,7 +87,7 @@
     }
 
     #map {
-      height: 800px;
+      height: 700px;
     }
 
     .footer {
@@ -126,7 +124,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([31.8, 35.2], 7); // Focused view
+    const map = L.map('map').setView([32.0, 35.0], 8);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors',
@@ -135,10 +133,18 @@
     }).addTo(map);
 
     const factions = [
-      { name: "$Gaza Cell", coords: [31.501 + Math.random() * 0.05, 34.466 + Math.random() * 0.05], color: "red" },
-      { name: "$Lebanon Front", coords: [33.9 + Math.random() * 0.05, 35.5 + Math.random() * 0.05], color: "red" },
+      { name: "$Gaza Cell 1", coords: [31.52, 34.47], color: "red" },
+      { name: "$Gaza Cell 2", coords: [31.53, 34.45], color: "red" },
+      { name: "$Lebanon Front 1", coords: [33.95, 35.5], color: "red" },
+      { name: "$Lebanon Front 2", coords: [33.93, 35.48], color: "red" },
       { name: "$Zionist Node", coords: [32.0853, 34.7818], color: "white" },
-      { name: "$Amman HQ", coords: [31.9516, 35.9239], color: "green" }
+      { name: "$Amman HQ", coords: [31.9516, 35.9239], color: "green" },
+      { name: "$Abu Dhabi", coords: [24.4539, 54.3773], color: "green" },
+      { name: "$Jeddah", coords: [21.4858, 39.1925], color: "green" },
+      { name: "$Beirut", coords: [33.8938, 35.5018], color: "green" },
+      { name: "$Aleppo", coords: [36.2021, 37.1343], color: "green" },
+      { name: "$Damascus", coords: [33.5138, 36.2765], color: "green" },
+      { name: "$Baghdad", coords: [33.3152, 44.3661], color: "green" }
     ];
 
     factions.forEach(f => {
@@ -150,17 +156,21 @@
       L.marker(f.coords, { icon }).addTo(map).bindPopup(`<b>${f.name}</b>`);
     });
 
-    // Optional: Add arrow lines (battle simulation)
     const lines = [
-      [factions[0].coords, factions[2].coords],
-      [factions[1].coords, factions[2].coords]
+      [[31.9516, 35.9239], [24.4539, 54.3773]], // Amman -> Abu Dhabi
+      [[31.9516, 35.9239], [31.52, 34.47]],      // Amman -> Gaza
+      [[31.9516, 35.9239], [21.4858, 39.1925]],  // Amman -> Jeddah
+      [[31.9516, 35.9239], [33.8938, 35.5018]],  // Amman -> Beirut
+      [[31.9516, 35.9239], [36.2021, 37.1343]],  // Amman -> Aleppo
+      [[31.9516, 35.9239], [33.5138, 36.2765]],  // Amman -> Damascus
+      [[31.9516, 35.9239], [33.3152, 44.3661]]   // Amman -> Baghdad
     ];
 
     lines.forEach(coords => {
       L.polyline(coords, {
-        color: 'red',
+        color: 'green',
         weight: 2,
-        dashArray: '6, 4',
+        dashArray: '6, 6',
         opacity: 0.8
       }).addTo(map);
     });
