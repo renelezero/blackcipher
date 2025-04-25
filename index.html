@@ -690,29 +690,30 @@
       animation: loadingAnimation 2s ease-out forwards;
     }
 
-    .pulse-marker {
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        opacity: 0.9;
-      }
-      50% {
-        transform: scale(1.5);
-        opacity: 0.4;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 0.9;
-      }
-    }
-
-    
+        
     @keyframes loadingAnimation {
       0% { width: 0%; }
       100% { width: 100%; }
+    }
+        /* Connection lines styling */
+    .connection-line {
+      stroke-dasharray: 5, 10;
+      animation: dashAnimation 30s linear infinite;
+    }
+    
+    @keyframes dashAnimation {
+      to {
+        stroke-dashoffset: 1000;
+      }
+    }
+    
+    /* Custom castle icon styling */
+    .custom-castle-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
     }
   </style>
 </head>
@@ -953,27 +954,28 @@
     // Terminal functionality
 
           // Map initialization and faction markers
+// Map initialization and faction markers
     const factions = [
-      { name: "$Gaza Cell 1", coords: [31.52, 34.47], color: "red" },
-      { name: "$Gaza Cell 2", coords: [31.53, 34.45], color: "red" },
-      { name: "$Gaza Cell 3", coords: [31.50, 34.46], color: "red" },
-      { name: "$Gaza Cell 4", coords: [31.515, 34.44], color: "red" },
-      { name: "$Lebanon Front 1", coords: [33.95, 35.5], color: "red" },
-      { name: "$Lebanon Front 2", coords: [33.93, 35.48], color: "red" },
-      { name: "$Lebanon Front 3", coords: [33.92, 35.47], color: "red" },
-      { name: "$Lebanon Front 4", coords: [33.94, 35.49], color: "red" },
-      { name: "$Zionist Node", coords: [32.0853, 34.7818], color: "white" },
-      { name: "$Amman HQ", coords: [31.9516, 35.9239], color: "green", pulse: true },
-      { name: "$Abu Dhabi", coords: [24.4539, 54.3773], color: "green" },
-      { name: "$Jeddah", coords: [21.4858, 39.1925], color: "green" },
-      { name: "$Beirut", coords: [33.8938, 35.5018], color: "green" },
-      { name: "$Aleppo", coords: [36.2021, 37.1343], color: "green" },
-      { name: "$Damascus", coords: [33.5138, 36.2765], color: "green" },
-      { name: "$Baghdad", coords: [33.3152, 44.3661], color: "green" },
-      { name: "$Idlib", coords: [35.9306, 36.6339], color: "green" },
-      { name: "$Kuwait", coords: [29.3759, 47.9774], color: "green" },
-      { name: "$Bahrain", coords: [26.0667, 50.5577], color: "green" },
-      { name: "$Doha", coords: [25.276987, 51.520008], color: "green" }
+      { name: "$Gaza Cell 1", coords: [31.52, 34.47], color: "red", type: "node" },
+      { name: "$Gaza Cell 2", coords: [31.53, 34.45], color: "red", type: "node" },
+      { name: "$Gaza Cell 3", coords: [31.50, 34.46], color: "red", type: "node" },
+      { name: "$Gaza Cell 4", coords: [31.515, 34.44], color: "red", type: "node" },
+      { name: "$Lebanon Front 1", coords: [33.95, 35.5], color: "red", type: "node" },
+      { name: "$Lebanon Front 2", coords: [33.93, 35.48], color: "red", type: "node" },
+      { name: "$Lebanon Front 3", coords: [33.92, 35.47], color: "red", type: "node" },
+      { name: "$Lebanon Front 4", coords: [33.94, 35.49], color: "red", type: "node" },
+      { name: "$Zionist Node", coords: [32.0853, 34.7818], color: "white", type: "node" },
+      { name: "$Amman HQ", coords: [31.9516, 35.9239], color: "green", type: "castle" },
+      { name: "$Abu Dhabi", coords: [24.4539, 54.3773], color: "green", type: "node" },
+      { name: "$Jeddah", coords: [21.4858, 39.1925], color: "green", type: "node" },
+      { name: "$Beirut", coords: [33.8938, 35.5018], color: "green", type: "node" },
+      { name: "$Aleppo", coords: [36.2021, 37.1343], color: "green", type: "node" },
+      { name: "$Damascus", coords: [33.5138, 36.2765], color: "green", type: "node" },
+      { name: "$Baghdad", coords: [33.3152, 44.3661], color: "green", type: "node" },
+      { name: "$Idlib", coords: [35.9306, 36.6339], color: "green", type: "node" },
+      { name: "$Kuwait", coords: [29.3759, 47.9774], color: "green", type: "node" },
+      { name: "$Bahrain", coords: [26.0667, 50.5577], color: "green", type: "node" },
+      { name: "$Doha", coords: [25.276987, 51.520008], color: "green", type: "node" }
     ];
     
     const map = L.map('map').setView([31.9516, 35.9239], 6); // Focused on Amman
@@ -984,19 +986,79 @@
       maxZoom: 19
     }).addTo(map);
     
-    factions.forEach(faction => {
-      const marker = L.circleMarker(faction.coords, {
-        radius: 8,
-        fillColor: faction.color,
-        color: "#000",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8,
-        className: faction.pulse ? 'pulse-marker' : ''
-      }).addTo(map);
-      
-      marker.bindPopup(`<strong>${faction.name}</strong>`);
+    // Create a custom castle icon for Amman
+    const castleIcon = L.divIcon({
+      className: 'custom-castle-icon',
+      html: '<i class="fas fa-chess-rook" style="font-size: 24px; color: #00ff00;"></i>',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12]
     });
+    
+    // Create markers and store them for later connection
+    const markers = {};
+    
+    factions.forEach(faction => {
+      if (faction.type === 'castle') {
+        // Use the castle icon for Amman HQ
+        const marker = L.marker(faction.coords, {
+          icon: castleIcon
+        }).addTo(map);
+        marker.bindPopup(`<strong>${faction.name}</strong>`);
+        markers[faction.name] = marker;
+      } else {
+        // Use circle markers for other nodes
+        const marker = L.circleMarker(faction.coords, {
+          radius: 8,
+          fillColor: faction.color,
+          color: "#000",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(map);
+        marker.bindPopup(`<strong>${faction.name}</strong>`);
+        markers[faction.name] = marker;
+      }
+    });
+    
+    // Create connection lines from Amman HQ to all other nodes
+    const ammanCoords = factions.find(f => f.name === "$Amman HQ").coords;
+    
+    factions.forEach(faction => {
+      if (faction.name !== "$Amman HQ") {
+        // Create a line from Amman to each node
+        const line = L.polyline([ammanCoords, faction.coords], {
+          color: faction.color,
+          weight: 2,
+          opacity: 0.6,
+          dashArray: '5, 10', // Creates a dashed line
+          className: 'connection-line'
+        }).addTo(map);
+      }
+    });
+    
+    // Add some random connections between nodes for more complexity
+    const createRandomConnections = (count = 10) => {
+      for (let i = 0; i < count; i++) {
+        // Pick two random nodes that aren't Amman
+        const nonAmmanFactions = factions.filter(f => f.name !== "$Amman HQ");
+        const faction1 = nonAmmanFactions[Math.floor(Math.random() * nonAmmanFactions.length)];
+        const faction2 = nonAmmanFactions[Math.floor(Math.random() * nonAmmanFactions.length)];
+        
+        // Don't connect a node to itself
+        if (faction1.name === faction2.name) continue;
+        
+        // Create a line between these two random nodes
+        L.polyline([faction1.coords, faction2.coords], {
+          color: '#aaaaaa',
+          weight: 1,
+          opacity: 0.3,
+          dashArray: '3, 8',
+          className: 'connection-line'
+        }).addTo(map);
+      }
+    };
+    
+    createRandomConnections(15);
 
 
     
