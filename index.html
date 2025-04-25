@@ -17,7 +17,6 @@
       color: #fff;
       overflow-x: hidden;
     }
-
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -28,24 +27,20 @@
       background: rgba(0, 0, 0, 0.85);
       z-index: 1000;
     }
-
     .logo {
       display: flex;
       align-items: center;
     }
-
     .logo img {
       height: 40px;
       margin-right: 12px;
     }
-
     .logo span {
       font-family: 'Unbounded', cursive;
       font-size: 1.5rem;
       font-weight: 700;
       color: #fff;
     }
-
     .hero {
       display: flex;
       flex-direction: column;
@@ -55,7 +50,6 @@
       padding-top: 80px;
       text-align: center;
     }
-
     .hero h2 {
       font-family: 'Unbounded', cursive;
       font-size: 4rem;
@@ -68,45 +62,38 @@
       border-right: 4px solid #ff0000;
       animation: typing 3s steps(20, end) forwards, blink 0.75s step-end infinite;
     }
-
+    .hero h3, .hero p {
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+    }
     .hero h3 {
       font-size: 1.5rem;
       font-weight: 400;
       color: #aaa;
       margin-top: 10px;
-      animation: fadeIn 2s ease forwards;
-      opacity: 0;
       animation-delay: 3s;
     }
-
     .hero p {
       font-size: 1.2rem;
       color: #ccc;
       max-width: 600px;
       margin-top: 30px;
-      animation: fadeIn 2s ease forwards;
-      opacity: 0;
       animation-delay: 4s;
     }
-
     @keyframes typing {
       from { width: 0 }
       to { width: 100% }
     }
-
     @keyframes blink {
       50% { border-color: transparent }
     }
-
     @keyframes fadeIn {
       to { opacity: 1 }
     }
-
     .feed-section {
       padding: 50px 20px;
       background: rgba(0, 0, 0, 0.85);
     }
-
     .feed-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -114,11 +101,9 @@
       overflow: hidden;
       box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
     }
-
     #map {
       height: 700px;
     }
-
     .footer {
       padding: 60px 40px;
       text-align: center;
@@ -162,7 +147,28 @@
       maxZoom: 19
     }).addTo(map);
 
-    const factions = [...];
+    const factions = [
+      { name: "$Gaza Cell 1", coords: [31.52, 34.47], color: "red" },
+      { name: "$Gaza Cell 2", coords: [31.53, 34.45], color: "red" },
+      { name: "$Gaza Cell 3", coords: [31.50, 34.46], color: "red" },
+      { name: "$Gaza Cell 4", coords: [31.515, 34.44], color: "red" },
+      { name: "$Lebanon Front 1", coords: [33.95, 35.5], color: "red" },
+      { name: "$Lebanon Front 2", coords: [33.93, 35.48], color: "red" },
+      { name: "$Lebanon Front 3", coords: [33.92, 35.47], color: "red" },
+      { name: "$Lebanon Front 4", coords: [33.94, 35.49], color: "red" },
+      { name: "$Zionist Node", coords: [32.0853, 34.7818], color: "white" },
+      { name: "$Amman HQ", coords: [31.9516, 35.9239], color: "green" },
+      { name: "$Abu Dhabi", coords: [24.4539, 54.3773], color: "green" },
+      { name: "$Jeddah", coords: [21.4858, 39.1925], color: "green" },
+      { name: "$Beirut", coords: [33.8938, 35.5018], color: "green" },
+      { name: "$Aleppo", coords: [36.2021, 37.1343], color: "green" },
+      { name: "$Damascus", coords: [33.5138, 36.2765], color: "green" },
+      { name: "$Baghdad", coords: [33.3152, 44.3661], color: "green" },
+      { name: "$Idlib", coords: [35.9306, 36.6339], color: "green" },
+      { name: "$Kuwait", coords: [29.3759, 47.9774], color: "green" },
+      { name: "$Bahrain", coords: [26.0667, 50.5577], color: "green" },
+      { name: "$Doha", coords: [25.276987, 51.520008], color: "green" }
+    ];
 
     factions.forEach(f => {
       const icon = L.divIcon({
@@ -173,7 +179,19 @@
       L.marker(f.coords, { icon }).addTo(map).bindPopup(`<b>${f.name}</b>`);
     });
 
-    const lines = [...];
+    const lines = [
+      [[31.9516, 35.9239], [24.4539, 54.3773]],
+      [[31.9516, 35.9239], [31.52, 34.47]],
+      [[31.9516, 35.9239], [21.4858, 39.1925]],
+      [[31.9516, 35.9239], [33.8938, 35.5018]],
+      [[31.9516, 35.9239], [36.2021, 37.1343]],
+      [[31.9516, 35.9239], [33.5138, 36.2765]],
+      [[31.9516, 35.9239], [33.3152, 44.3661]],
+      [[31.9516, 35.9239], [35.9306, 36.6339]],
+      [[31.9516, 35.9239], [29.3759, 47.9774]],
+      [[31.9516, 35.9239], [26.0667, 50.5577]],
+      [[31.9516, 35.9239], [25.276987, 51.520008]]
+    ];
 
     lines.forEach(coords => {
       L.polyline(coords, {
