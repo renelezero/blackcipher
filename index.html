@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>$NEOGAZA</title>
+  <title>Black Cipher Capital | $NEOGAZA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap" rel="stylesheet">
@@ -60,17 +60,32 @@
 
     .hero h1 {
       font-family: 'Unbounded', cursive;
+      font-size: 3rem;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .hero h2 {
+      font-family: 'Unbounded', cursive;
       font-size: 4rem;
       background: linear-gradient(90deg, #ff0000, #ff3333);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
+      margin: 10px 0;
+    }
+
+    .hero h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #aaa;
+      margin-top: 10px;
     }
 
     .hero p {
       font-size: 1.2rem;
       color: #ccc;
       max-width: 600px;
+      margin-top: 30px;
     }
 
     .feed-section {
@@ -108,8 +123,10 @@
   </nav>
 
   <section class="hero">
-    <h1>$NEOGAZA</h1>
-    <p>A revolutionary token supporting global solidarity. Powered by Solana. Gaza & Lebanon resistance vs Zionist occupation. HQ: Amman.</p>
+    <h1>Black Cipher Capital</h1>
+    <h2>$NEOGAZA</h2>
+    <h3>Releasing soon...</h3>
+    <p>MENA-based developers and hackers seeking to restore liquidity and financial structure for millions robbed of legitimate economic access. Building in the shadows. Engineering for power.</p>
   </section>
 
   <section id="feed" class="feed-section">
@@ -119,7 +136,7 @@
   </section>
 
   <footer class="footer">
-    &copy; 2025 $NEOGAZA. Built for the people.
+    &copy; 2025 Black Cipher Capital. Powered by $NEOGAZA.
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -135,8 +152,12 @@
     const factions = [
       { name: "$Gaza Cell 1", coords: [31.52, 34.47], color: "red" },
       { name: "$Gaza Cell 2", coords: [31.53, 34.45], color: "red" },
+      { name: "$Gaza Cell 3", coords: [31.50, 34.46], color: "red" },
+      { name: "$Gaza Cell 4", coords: [31.515, 34.44], color: "red" },
       { name: "$Lebanon Front 1", coords: [33.95, 35.5], color: "red" },
       { name: "$Lebanon Front 2", coords: [33.93, 35.48], color: "red" },
+      { name: "$Lebanon Front 3", coords: [33.92, 35.47], color: "red" },
+      { name: "$Lebanon Front 4", coords: [33.94, 35.49], color: "red" },
       { name: "$Zionist Node", coords: [32.0853, 34.7818], color: "white" },
       { name: "$Amman HQ", coords: [31.9516, 35.9239], color: "green" },
       { name: "$Abu Dhabi", coords: [24.4539, 54.3773], color: "green" },
@@ -144,7 +165,11 @@
       { name: "$Beirut", coords: [33.8938, 35.5018], color: "green" },
       { name: "$Aleppo", coords: [36.2021, 37.1343], color: "green" },
       { name: "$Damascus", coords: [33.5138, 36.2765], color: "green" },
-      { name: "$Baghdad", coords: [33.3152, 44.3661], color: "green" }
+      { name: "$Baghdad", coords: [33.3152, 44.3661], color: "green" },
+      { name: "$Idlib", coords: [35.9306, 36.6339], color: "green" },
+      { name: "$Kuwait", coords: [29.3759, 47.9774], color: "green" },
+      { name: "$Bahrain", coords: [26.0667, 50.5577], color: "green" },
+      { name: "$Doha", coords: [25.276987, 51.520008], color: "green" }
     ];
 
     factions.forEach(f => {
@@ -157,13 +182,17 @@
     });
 
     const lines = [
-      [[31.9516, 35.9239], [24.4539, 54.3773]], // Amman -> Abu Dhabi
-      [[31.9516, 35.9239], [31.52, 34.47]],      // Amman -> Gaza
-      [[31.9516, 35.9239], [21.4858, 39.1925]],  // Amman -> Jeddah
-      [[31.9516, 35.9239], [33.8938, 35.5018]],  // Amman -> Beirut
-      [[31.9516, 35.9239], [36.2021, 37.1343]],  // Amman -> Aleppo
-      [[31.9516, 35.9239], [33.5138, 36.2765]],  // Amman -> Damascus
-      [[31.9516, 35.9239], [33.3152, 44.3661]]   // Amman -> Baghdad
+      [[31.9516, 35.9239], [24.4539, 54.3773]],
+      [[31.9516, 35.9239], [31.52, 34.47]],
+      [[31.9516, 35.9239], [21.4858, 39.1925]],
+      [[31.9516, 35.9239], [33.8938, 35.5018]],
+      [[31.9516, 35.9239], [36.2021, 37.1343]],
+      [[31.9516, 35.9239], [33.5138, 36.2765]],
+      [[31.9516, 35.9239], [33.3152, 44.3661]],
+      [[31.9516, 35.9239], [35.9306, 36.6339]],
+      [[31.9516, 35.9239], [29.3759, 47.9774]],
+      [[31.9516, 35.9239], [26.0667, 50.5577]],
+      [[31.9516, 35.9239], [25.276987, 51.520008]]
     ];
 
     lines.forEach(coords => {
